@@ -9,16 +9,31 @@ namespace TMHCodingChallengeHostGUI
     public class NewYearsChaos
     {
         private int[] _originalQueue;
-        private int[] _newQueue;
+        private int[] _finalQueue;
 
-        public int[] OriginalQueue { 
-           get 
+        public int[] OriginalQueue
+        {
+            get
             {
-                return _originalQueue;
-                } 
+                if (_originalQueue != null)
+                {
+                    return _originalQueue;
+                }
+                else if (_finalQueue != null)
+                {
+                    PopulateOriginalQueueStandard(_finalQueue.Length);
+                    return _originalQueue;
+                }
+                return null;
+            }
             set
             {
-                if(value.Length == _newQueue.Length)
+                if (_finalQueue == null)
+                {
+                    _originalQueue = value;
+                    _finalQueue = new int[value.Length];
+                }
+                else if (value.Length == _finalQueue.Length)
                 {
                     // Replace original queue but keep newQueue Value
                     // For Practice not Practicality.
@@ -31,38 +46,39 @@ namespace TMHCodingChallengeHostGUI
                 {
                     _originalQueue = value;
                     // Add Debug Comment here to denote _newQueue is being overwritten.
-                    _newQueue = new int[_originalQueue.Length];
+                    _finalQueue = new int[_originalQueue.Length];
                 }
             }
         }
-        public int[] NewQueue { 
+        public int[] FinalQueue
+        {
             get
             {
-                return _newQueue;
+                return _finalQueue;
             }
             set
             {
-                _newQueue = value;
-                if(value.Length != _originalQueue.Length)
+                _finalQueue = value;
+                if (_originalQueue == null || value.Length != _originalQueue.Length)
                 {
                     // TODO: Add Debug denoting overwritting of original Queue.
                     _originalQueue = Enumerable.Range(1, value.Length).ToArray();
                 }
-            } 
+            }
         }
         // Should now be redundant but still check.
         public bool IsValid
         {
             get
             {
-                return OriginalQueue.Length == NewQueue.Length;
+                return OriginalQueue.Length == FinalQueue.Length;
             }
         }
         public int QueueLength
         {
             get
             {
-                if(IsValid)
+                if (IsValid)
                 {
                     return OriginalQueue.Length;
                 }
@@ -77,16 +93,25 @@ namespace TMHCodingChallengeHostGUI
             }
         }
 
-
-        public NewYearsChaos(int[] originalQueue, int[] newQueue)
+        public NewYearsChaos(int[] finalQueue)
         {
-            OriginalQueue = originalQueue;
-            NewQueue = newQueue;
+            FinalQueue = finalQueue;
+
         }
 
+        public NewYearsChaos(int[] originalQueue, int[] finalQueue)
+        {
+            OriginalQueue = originalQueue;
+            FinalQueue = finalQueue;
+        }
+
+        public void PopulateOriginalQueueStandard(int length)
+        {
+            OriginalQueue = Enumerable.Range(1, length).ToArray();
+        }
         public string CalculateBribes()
         {
-            if(!IsValid)
+            if (!IsValid)
             {
                 return "Invalid Queues.";
             }
@@ -94,31 +119,32 @@ namespace TMHCodingChallengeHostGUI
             int bribeCount = 0; ;
             int[] queueState = OriginalQueue;
 
-            for(int i = QueueLength; i > 0 ; i--)
+            for (int i = QueueLength; i > 0; i--)
             {
-                int placeInLine = Array.IndexOf(queueState, NewQueue[i-1]);
+                int placeInLine = Array.IndexOf(queueState, FinalQueue[i - 1]);
                 int change = (i + 1) - placeInLine;
-                if(change > 2)
+                if (change > 2)
                 {
                     result = "Too Chaotic";
-                } else if(change > 0)
+                }
+                else if (change > 0)
                 {
                     bribeCount += change;
                 }
-                
+
             }
 
             return "Not implemented.";
         }
-        
+
 
         public int[] QueueStateUpdate(int[] queueState, int index, int change)
         {
-            if(change !> 0)
+            if (change! > 0)
             {
                 return queueState;
             }
-            while(change > 0)
+            while (change > 0)
             {
                 int temp = queueState[index];
                 queueState[index] = queueState[index - 1];
