@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodingChallenge_Tests
+namespace TMHCodingChallengeHostGUI
 {
     public class DiagonalDifference
     {
-
         private List<List<int>> _arr;
         private Random rng;
         // Hard coded defaults based on HackerRank.
         private int upperLimit = 100;
         private int lowerLimit = -100;
 
-        public int UpperLimit { get => upperLimit; 
-            set 
-            { 
-                if(value <= lowerLimit)
+        public int UpperLimit
+        {
+            get => upperLimit;
+            set
+            {
+                if (value <= lowerLimit)
                 {
                     throw new Exception("Upper Limit must be larger than Lower Limit.");
                 }
@@ -26,12 +27,14 @@ namespace CodingChallenge_Tests
                 {
                     upperLimit = value;
                 }
-            } 
+            }
         }
-        public int LowerLimit { get => lowerLimit;
+        public int LowerLimit
+        {
+            get => lowerLimit;
             set
             {
-                if(value >= upperLimit)
+                if (value >= upperLimit)
                 {
                     throw new Exception("Lower Limit must be less than the Upper Limit.");
                 }
@@ -42,8 +45,7 @@ namespace CodingChallenge_Tests
             }
         }
 
-
-        public  Random Rng
+        public Random Rng
         {
             get
             {
@@ -59,7 +61,7 @@ namespace CodingChallenge_Tests
         public DiagonalDifference()
         {
             List<int> innerOne = new List<int>() { 11, 2, 4 };
-            List<int> innerTwo= new List<int>() { 14, 5, 6 };
+            List<int> innerTwo = new List<int>() { 14, 5, 6 };
             List<int> innerThree = new List<int>() { 10, 8, -12 };
             _arr = new List<List<int>>() { innerOne, innerTwo, innerThree };
         }
@@ -74,7 +76,7 @@ namespace CodingChallenge_Tests
         public DiagonalDifference(int n)
         {
             _arr = new List<List<int>>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 _arr.Add(GenerateListOfInt(n));
             }
@@ -94,7 +96,7 @@ namespace CodingChallenge_Tests
         public List<int> GenerateListOfInt(int n)
         {
             List<int> arrInt = new List<int>();
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 arrInt.Add(Rng.Next(lowerLimit, upperLimit + 1));
             }
@@ -132,6 +134,10 @@ namespace CodingChallenge_Tests
 
         }
 
+        public int DiagonalDifferenceResult() => DiagonalDifferenceResult(_arr);
+
+        
+
         // Second attempt at different approach.
         public int DiagonalDifferenceResultMethod2(List<List<int>> arr)
         {
@@ -139,7 +145,7 @@ namespace CodingChallenge_Tests
             int ltr = 0;
             int rtl = 0;
 
-            for(int i = 0; i < arr.Count; i++)
+            for (int i = 0; i < arr.Count; i++)
             {
                 ltr += arr[i][i];
                 rtl += arr[arr.Count - (i + 1)][arr.Count - (i + 1)];
@@ -148,8 +154,5 @@ namespace CodingChallenge_Tests
             return (ltr - rtl) >= 0 ? ltr - rtl : (ltr - rtl) * -1;
 
         }
-
-
-
     }
 }

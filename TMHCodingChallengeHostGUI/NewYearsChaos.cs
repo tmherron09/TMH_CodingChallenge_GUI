@@ -89,14 +89,13 @@ namespace TMHCodingChallengeHostGUI
         {
             get
             {
-                return CalculateBribes();
+                return CalculateBribesGeneric();
             }
         }
 
         public NewYearsChaos(int[] finalQueue)
         {
             FinalQueue = finalQueue;
-
         }
 
         public NewYearsChaos(int[] originalQueue, int[] finalQueue)
@@ -109,7 +108,8 @@ namespace TMHCodingChallengeHostGUI
         {
             OriginalQueue = Enumerable.Range(1, length).ToArray();
         }
-        public string CalculateBribes()
+        // Used when assumed Line starts in numerical order.
+        public string CalculateBribesGeneric()
         {
             if (!IsValid)
             {
@@ -117,41 +117,70 @@ namespace TMHCodingChallengeHostGUI
             }
             string result = "";
             int bribeCount = 0; ;
-            int[] queueState = OriginalQueue;
-
-            for (int i = QueueLength; i > 0; i--)
+            for (int i = 0; i < QueueLength - 1; i++)
             {
-                int placeInLine = Array.IndexOf(queueState, FinalQueue[i - 1]);
-                int change = (i + 1) - placeInLine;
-                if (change > 2)
+                int chaoticCount = 0;
+                for (int j = i + 1; j < QueueLength; j++)
                 {
-                    result = "Too Chaotic";
+                    if (FinalQueue[i] > FinalQueue[j])
+                    {
+                        bribeCount++;
+                        chaoticCount++;
+                    }
                 }
-                else if (change > 0)
+                if (chaoticCount > 2)
                 {
-                    bribeCount += change;
+                    result = "Too Chaotic ";
                 }
-
             }
 
-            return "Not implemented.";
+            result += $"Total Bribes: {bribeCount}";
+
+            return result;
+        }
+
+        public string CalculateBribesOptimized()
+        {
+
+            if (!IsValid)
+            {
+                return "Invalid Queues.";
+            }
+            string result = "";
+            int bribeCount = 0;
+            for (int i = 0; i < FinalQueue.Length; i++)
+            {
+                if(FinalQueue[i] - (i + 1) > 2)
+                { 
+                    result = "Too Chaotic ";
+                }
+                for (int j = FinalQueue[i] - 2; j < i ; j++)
+                {
+                    
+                    if (FinalQueue[j] > FinalQueue[i])
+                    {
+                        bribeCount++;
+                    }
+                }
+            }
+
+            result += $"Total Bribes: {bribeCount}";
+
+            return result;
+
         }
 
 
         public int[] QueueStateUpdate(int[] queueState, int index, int change)
         {
-            if (change! > 0)
-            {
-                return queueState;
-            }
             while (change > 0)
             {
                 int temp = queueState[index];
                 queueState[index] = queueState[index - 1];
                 queueState[index - 1] = temp;
+                index--;
                 change--;
             }
-
             return queueState;
         }
 
