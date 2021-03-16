@@ -1,7 +1,7 @@
 ﻿
 namespace TMHCodingChallengeHostGUI
 {
-    partial class MainWindow
+    partial class DiagonalDifferenceWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -29,17 +29,10 @@ namespace TMHCodingChallengeHostGUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // MainWindow
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 411);
-            this.Name = "MainWindow";
-            this.Text = "TimHerron.Dev Coding GUI";
-            this.ResumeLayout(false);
-
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "DiagonalDifferenceWindow";
         }
 
         #endregion
