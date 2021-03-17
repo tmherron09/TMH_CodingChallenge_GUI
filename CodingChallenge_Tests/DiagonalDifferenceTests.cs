@@ -20,44 +20,37 @@ namespace CodingChallenge_Tests
         }
 
         [Test]
-        public void HackerRankResult_Int11()
+        public void HackerRankResult_Int15()
         {
             DiagonalDifference diagDiff = new DiagonalDifference();
 
 
-            
+            int expected = 15;
+            int actual = diagDiff.DiagonalDifferenceResult();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void IsValid_NewFinalLongerArray_ReturnTrue()
+        public void RandomAssignment_ListSize_Expected()
         {
-            int[] orig = { 1, 2, 3, 4, 5 };
-            int[] final = { 5, 4, 3, 2, 1 };
-            NewYearsChaos _genericSetup = new NewYearsChaos(orig, final);
+            int n = 9;
+            DiagonalDifference diagDiff = new DiagonalDifference(n);
 
-            _genericSetup.FinalQueue = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            List<List<int>> expectedArr = new List<List<int>>(n);
+            for(int i = 0; i < n; i++)
+            {
+                expectedArr.Add(new List<int>());
+                for (int j = 0; j < n; j++)
+                {
+                    expectedArr[i].Add(0);
+                }
+            }
+            List<List<int>> actualArr = diagDiff.Arr;
 
 
-            Assert.IsTrue(_genericSetup.IsValid);
+            Assert.IsTrue((expectedArr.Count == actualArr.Count && expectedArr[0].Count == actualArr[0].Count));
         }
-
-        ual(Expected, Output);
-        }
-
-        [Test]
-        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 2, 1, 5, 3, 4 }, false, 3)]
-        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 1, 2, 3, 4 }, true, 4)]
-        [TestCase(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 3, 4, 2, 1 }, true, 9)]
-        [TestCase(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 2, 5, 3, 4, 7, 8, 6 }, false, 4)]
-        public void CalculateBribesGeneric_Chaotic_Matches(int[] orig, int[] final, bool isChaotic, int bribeCount)
-        {
-            NewYearsChaos _genericConstr = new NewYearsChaos(orig, final);
-
-            string Expected = $"{(isChaotic ? "Too Chaotic " : "")}Total Bribes: {bribeCount}";
-            string Output = _genericConstr.CalculateBribesOptimized();
-            Assert.AreEqual(Expected, Output);
-        }
-
 
 
     }

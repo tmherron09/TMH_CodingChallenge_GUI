@@ -14,6 +14,12 @@ namespace TMHCodingChallengeHostGUI
         private int upperLimit = 100;
         private int lowerLimit = -100;
 
+
+        public List<List<int>> Arr
+        {
+            get => _arr;
+        }
+
         public int UpperLimit
         {
             get => upperLimit;
@@ -56,6 +62,15 @@ namespace TMHCodingChallengeHostGUI
                 return rng;
             }
         }
+
+        public int InputLength
+        {
+            get
+            {
+                return _arr.Count;
+            }
+        }
+
 
         // Default With HackerRank Example
         public DiagonalDifference()
@@ -139,20 +154,21 @@ namespace TMHCodingChallengeHostGUI
         
 
         // Second attempt at different approach.
-        public int DiagonalDifferenceResultMethod2(List<List<int>> arr)
-        {
+        // WIP
+        //public int DiagonalDifferenceResultMethod2(List<List<int>> arr)
+        //{
 
-            int ltr = 0;
-            int rtl = 0;
+        //    int ltr = 0;
+        //    int rtl = 0;
 
-            for (int i = 0; i < arr.Count; i++)
-            {
-                ltr += arr[i][i];
-                rtl += arr[arr.Count - (i + 1)][arr.Count - (i + 1)];
-            }
+        //    for (int i = 0; i < arr.Count; i++)
+        //    {
+        //        ltr += arr[i][i];
+        //        rtl += arr[arr.Count - (i + 1)][arr.Count - (i + 1)];
+        //    }
 
-            return (ltr - rtl) >= 0 ? ltr - rtl : (ltr - rtl) * -1;
+        //    return (ltr - rtl) >= 0 ? ltr - rtl : (ltr - rtl) * -1;
 
-        }
+        //}
     }
 }
